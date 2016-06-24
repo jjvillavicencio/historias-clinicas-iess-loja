@@ -1,0 +1,37 @@
+INGRESAR USUARIO ROOT POSTGRESQL
+sudo psql -U postgres
+CREAR USUARIO
+CREATE USER academia PASSWORD 'academia';
+ELIMINAR USUARIO
+DROP USER 'usuario';
+ELIMINAR BASE DE DATOS
+DROP DATABASE 'nombre';
+ASIGNAR PERMISOS DE SUPERUSUARIO
+ALTER ROLE nanotutoriales WITH SUPERUSER;
+CREAR BASE DE DATOS
+CREATE DATABASE historias_clinicas_iess owner academia;
+CONECTARSE A BD CON USUARIO
+\c 'base de datos' 'usuario'
+EJECUTAR .sql
+\i '/ubicacion'
+LISTAR TABLAS
+\d
+IMPORTAR DATOS CSV
+\COPY pais(pai_codigo,pai_nombre) FROM '/home/jjvillavicencio/Documentos/comp/Academias/pais.csv' DELIMITER ',' CSV HEADER;
+
+\COPY provincia(pro_codigo, pai_codigo, pro_nombre) FROM '/home/jjvillavicencio/Documentos/comp/Academias/provincia.csv'  DELIMITER ',' CSV HEADER;
+
+\COPY canton(can_codigo,pro_codigo,can_nombre) FROM '/home/jjvillavicencio/Documentos/comp/Academias/canton.csv'   DELIMITER ',' CSV HEADER;
+
+\COPY parroquia(par_codigo, can_codigo, par_nombre) FROM '/home/jjvillavicencio/Documentos/comp/Academias/parroquias.csv'    DELIMITER ',' CSV HEADER;
+
+\COPY tipo_beneficiario  FROM '/home/jjvillavicencio/Documentos/comp/Academias/beneficio.csv'    DELIMITER ',' CSV HEADER;
+
+\COPY contacto  FROM '/home/jjvillavicencio/Documentos/comp/Academias/contacto.csv'    DELIMITER ',' CSV HEADER;
+
+\COPY paciente  FROM '/home/jjvillavicencio/Documentos/comp/Academias/paciente.csv'   DELIMITER ',' CSV HEADER;
+
+\COPY historia_clinica  FROM '/home/jjvillavicencio/Documentos/comp/Academias/HISTORIA.csv'    DELIMITER ',' CSV HEADER; 
+
+
+
