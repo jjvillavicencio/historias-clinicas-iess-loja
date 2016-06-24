@@ -60,7 +60,7 @@ drop table TIPO_BENEFICIARIO;
 create table CANTON (
    CAN_CODIGO           VARCHAR(10)          not null,
    PRO_CODIGO           VARCHAR(10)          null,
-   CAN_NOMBRE           VARCHAR(20)          null,
+   CAN_NOMBRE           VARCHAR(60)          null,
    constraint PK_CANTON primary key (CAN_CODIGO)
 );
 
@@ -84,9 +84,9 @@ PRO_CODIGO
 create table CONTACTO (
    CON_CODIGO           INT4                 not null,
    PAR_CODIGO           VARCHAR(10)          null,
-   CON_NOMBRE           VARCHAR(30)          null,
+   CON_NOMBRE           VARCHAR(60)          null,
    CON_TELEFONO         VARCHAR(12)          null,
-   CON_TRABAJO          VARCHAR(20)          null,
+   CON_TRABAJO          VARCHAR(60)          null,
    constraint PK_CONTACTO primary key (CON_CODIGO)
 );
 
@@ -146,7 +146,7 @@ create table PACIENTE (
    CAN_CODIGO           VARCHAR(10)          null,
    PAR_CODIGO           VARCHAR(10)          null,
    PAC_CODIGO           VARCHAR(15)          null,
-   PAC_NOMBRE           VARCHAR(30)          null,
+   PAC_NOMBRE           VARCHAR(60)          null,
    PAC_FECHA_NAC        DATE                 null,
    SEXO                 VARCHAR(1)           null,
    PAC_DIRECCION        TEXT                 null,
@@ -187,7 +187,7 @@ PAR_CODIGO
 /*==============================================================*/
 create table PAIS (
    PAI_CODIGO           VARCHAR(5)           not null,
-   PAI_NOMBRE           VARCHAR(20)          null,
+   PAI_NOMBRE           VARCHAR(60)          null,
    constraint PK_PAIS primary key (PAI_CODIGO)
 );
 
@@ -204,7 +204,7 @@ PAI_CODIGO
 create table PARROQUIA (
    PAR_CODIGO           VARCHAR(10)          not null,
    CAN_CODIGO           VARCHAR(10)          null,
-   PAR_NOMBRE           VARCHAR(20)          null,
+   PAR_NOMBRE           VARCHAR(60)          null,
    constraint PK_PARROQUIA primary key (PAR_CODIGO)
 );
 
@@ -228,7 +228,7 @@ CAN_CODIGO
 create table PROVINCIA (
    PRO_CODIGO           VARCHAR(10)          not null,
    PAI_CODIGO           VARCHAR(5)           null,
-   PRO_NOMBRE           VARCHAR(20)          null,
+   PRO_NOMBRE           VARCHAR(60)          null,
    constraint PK_PROVINCIA primary key (PRO_CODIGO)
 );
 
@@ -251,7 +251,7 @@ PAI_CODIGO
 /*==============================================================*/
 create table TIPO_BENEFICIARIO (
    TIP_CODIGO           VARCHAR(4)           not null,
-   TIP_NOMBRE           VARCHAR(20)          null,
+   TIP_NOMBRE           VARCHAR(60)          null,
    constraint PK_TIPO_BENEFICIARIO primary key (TIP_CODIGO)
 );
 
