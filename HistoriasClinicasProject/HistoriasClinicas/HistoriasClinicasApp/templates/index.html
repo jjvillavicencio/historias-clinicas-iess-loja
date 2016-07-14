@@ -1,106 +1,150 @@
 {%load static%}
 <!DOCTYPE html>
 <html lang="es">
-	<head>
-		<meta http-equiv="content-type" content="text/html; charset=UTF-8">
-		<meta charset="utf-8">
-		<title>Historias Clínicas IESS</title>
-		<meta name="generator" content="Bootply" />
-		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-		<link href="{%static 'bootstrap/css/bootstrap.min.css'%}" rel="stylesheet">
-		<!--[if lt IE 9]>
-			<script src="//html5shim.googlecode.com/svn/trunk/html5.js"></script>
-		<![endif]-->
-		<link href="{%static 'css/styles.css'%}" rel="stylesheet">
+<head>
+	<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+	<meta charset="utf-8">
+	<title>Historias Clínicas IESS</title>
+	<meta name="generator" content="Bootply" />
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+	<link href="{%static 'bootstrap/css/bootstrap.min.css'%}" rel="stylesheet">
+	<!--[if lt IE 9]>
+	<script src="//html5shim.googlecode.com/svn/trunk/html5.js"></script>
+	<![endif]-->
+	<link href="{%static 'css/styles.css'%}" rel="stylesheet">
+	<link rel="icon" type="image/png" href="{%static 'img/favicon-32x32.png'%}" sizes="32x32" />
+</head>
+<body>
+	<!-- header -->
+	{%block head%}
+	<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.2/jquery.min.js"></script>
 
-	</head>
-	<body>
-<!-- header -->
-{%block head%}
-{%endblock%}
+	{%endblock%}
 
-<div id="top-nav" class="navbar navbar-inverse navbar-static-top">
-    <div class="container-fluid">
-        <div class="navbar-header">
-            <a class="navbar-brand" href="#">Historias Clínicas IESS Loja</a>
-        </div>
-    </div>
-    <!-- /container -->
-</div>
-<!-- /Header -->
+	<div id="top-nav" class="navbar navbar-inverse navbar-static-top">
+		<div class="container-fluid">
+			<div class="navbar-header">
+				<a class="navbar-brand" href="/">Historias Clínicas IESS Loja</a>
+			</div>
+		</div>
+		<!-- /container -->
+	</div>
+	<!-- /Header -->
 
-<!-- Main -->
-<div class="container-fluid">
-    <div class="row">
-        <div class="col-sm-3">
-            <!-- Left column -->
-            <a href="#"><strong><i class="glyphicon glyphicon-eye-open"></i> Visualizaciones</strong></a>
+	<!-- Main -->
+	<div class="container-fluid">
+		<div class="row">
+			<div class="col-sm-3">
+				<!-- Left column -->
+				<a href="#"><strong><i class="glyphicon glyphicon-eye-open"></i> Visualizaciones</strong></a>
 
-            <hr>
+				<hr>
 
-            <ul class="nav nav-stacked">
-                <li class="nav-header"> <a href="#" data-toggle="collapse" data-target="#userMenu">DataTables <i class="glyphicon glyphicon-chevron-down"></i></a>
-                    <ul class="nav nav-stacked collapse in" id="userMenu">
-                        <li class="active"><a href="/hisclidat"><i class="glyphicon glyphicon-folder-open"></i> Historias Clinicas</a></li>
-                        <li><a href="#"><i class="glyphicon glyphicon-user"></i> Pacientes</a></li>
-                        <li><a href="#"><i class="glyphicon glyphicon-book"></i> Contactos</a></li>
-                    </ul>
-                </li>
-                <li class="nav-header"> <a href="#" data-toggle="collapse" data-target="#menu2"> Mapas <i class="glyphicon glyphicon-chevron-right"></i></a>
+				<ul class="nav nav-stacked">
+					<li class="nav-header"> <a href="#" data-toggle="collapse" data-target="#userMenu">DataTables <i class="glyphicon glyphicon-chevron-down"></i></a>
+						<ul class="nav nav-stacked collapse in" id="userMenu">
+							<li class="active"><a href="/hisclidat"><i class="glyphicon glyphicon-list-alt"></i> Historias Clinicas</a></li>
+							<li><a href="/pacientedat"><i class="glyphicon glyphicon-user"></i> Pacientes</a></li>
+							<li><a href="/contactosdat"><i class="glyphicon glyphicon-phone"></i> Contactos</a></li>
+						</ul>
+					</li>
+					<li class="nav-header"> <a href="#" data-toggle="collapse" data-target="#menu2"> Mapas <i class="glyphicon glyphicon-chevron-right"></i></a>
 
-                    <ul class="nav nav-stacked collapse" id="menu2">
-                        <li><a href="#">Provincias</a>
-                        </li>
-                        <li><a href="#">Cantones</a>
-                        </li>
-                        <li><a href="#">Parroquias</a>
-                        </li>
-                    </ul>
-                </li>
-                <li class="nav-header">
-                    <a href="#" data-toggle="collapse" data-target="#menu3"> HighCharts<i class="glyphicon glyphicon-chevron-right"></i></a>
-                    <ul class="nav nav-stacked collapse" id="menu3">
-                        <li><a href=""><i class="glyphicon glyphicon-circle"></i> Provincias</a></li>
-                        <li><a href=""><i class="glyphicon glyphicon-circle"></i> Cantones</a></li>
-                    </ul>
-                </li>
-            </ul>
+						<ul class="nav nav-stacked collapse" id="menu2">
+							<li><a href="#">Provincias</a>
+							</li>
+							<li><a href="#">Cantones</a>
+							</li>
+							<li><a href="#">Parroquias</a>
+							</li>
+						</ul>
+					</li>
+					<li class="nav-header">
+						<a href="#" data-toggle="collapse" data-target="#menu3"> HighCharts<i class="glyphicon glyphicon-chevron-right"></i></a>
+						<ul class="nav nav-stacked collapse" id="menu3">
+							<li><a href=""><i class="glyphicon glyphicon-circle"></i> Provincias</a></li>
+							<li><a href=""><i class="glyphicon glyphicon-circle"></i> Cantones</a></li>
+						</ul>
+					</li>
+				</ul>
 
-            <hr>
+				<hr>
 
-            <a href="#"><strong><i class="glyphicon glyphicon-link"></i> Información</strong></a>
+				<a href="#"><strong><i class="glyphicon glyphicon-link"></i> Información</strong></a>
 
-            <hr>
+				<hr>
 
-            <ul class="nav nav-pills nav-stacked">
-                <li class="nav-header"></li>
-                <li><a href="/bushisclidat"><i class="glyphicon glyphicon-list-alt"></i> Reports</a></li>
-                <li><a href="#"><i class="glyphicon glyphicon-book"></i> Pages</a></li>
-                <li><a href="#"><i class="glyphicon glyphicon-star"></i> Social Media</a></li>
-            </ul>
-        </div>
-        <!-- /col-3 -->
-        <div class="col-sm-9">
+				<ul class="nav nav-pills nav-stacked">
+					<li class="nav-header"></li>
+					<li><a href="/buspacientedat"><i class="glyphicon glyphicon-list-alt"></i> Reports</a></li>
+					<li><a href="https://git.taw.utpl.edu.ec/jgmasache/historia-clinica-iees-loja/wikis/home"><i class="glyphicon glyphicon-book"></i> Wiiki</a></li>
+					<li><a href="#"><i class="glyphicon glyphicon-star"></i> Social Media</a></li>
+				</ul>
+			</div>
+			<!-- /col-3 -->
+			<div class="col-sm-9">
 
-            <a href="#"><strong><i class="glyphicon glyphicon-dashboard"></i> My Dashboard</strong></a>
-            <hr>
+				<a href="#"><strong><i class="glyphicon glyphicon-dashboard"></i> My Dashboard</strong></a>
+				<hr>
 
-            <div class="row">
-								{%block dashboard%}
-								{%endblock%}
-            </div>
-            <!--/row-->
-        </div>
-        <!--/col-span-9-->
-    </div>
-</div>
-<!-- /Main -->
+				<div class="row">
+					{%block dashboard%}
+					<div class="col-md-12">
+						<div class="encabezado-utpl">
+							<center>
+								<img src="http://utpl.edu.ec/sites/all/themes/utpl/images/logo.png" alt="" />
+							</center>
+						</div>
 
-<footer class="text-center">Powered by @jjvillavicencio - @jgmasache</footer>
+						<center>
+							<img src="{%static 'img/utpl-iess.png'%}" height="100px" width="100px" class="img-circle img-responsive">
+						</center>
 
-<!-- /.modal -->
+						<h2>Descripción</h2>
+						<p>
+							El presente proyecto estara basado en datos proporcionados por el Hospital del Instituto Ecuatoriano de Seguridad Social (IESS), datos que comprenden información acerca de las historias clinicas que han sido creadas desde el año 2015 hasta el mes de Marzo del 2016.
+						</p>
+						<h2>Autores</h2>
+						<div class="col-md-6">
+							<div class="panel-body">
+								<div class="col-xs-4 text-center">
+									<img src="{%static 'img/john.jpg'%}" height="80px" width="auto" class="img-circle img-responsive">
+								</div>
+								<div>
+									<p>
+										John Jairo Villavicencio Sarango
+									</p>
+								</div>
+							</div>
+						</div>
+						<div class="col-md-6">
+							<div class="panel-body">
+								<div class="col-xs-4 text-center">
+									<img src="{%static 'img/jackson.jpg'%}" height="auto" width="80px" class="img-circle img-responsive">
+								</div>
+								<div>
+									<p>
+										Jakson Gregorio Masache
+									</p>
+								</div>
+							</div>
+						</div>
+					</div>
+
+					{%endblock%}
+				</div>
+				<!--/row-->
+			</div>
+			<!--/col-span-9-->
+		</div>
+	</div>
+	<!-- /Main -->
+
+	<footer class="text-center">Powered by @jjvillavicencio - @jgmasache</footer>
+
+	<!-- /.modal -->
 	<!-- script references -->
-		<script src="{%static 'bootstrap/js/bootstrap.min.js'%}"></script>
-		<script src="{%static 'js/scripts.js'%}"></script>
-	</body>
+	<script src="{%static 'bootstrap/js/bootstrap.min.js'%}"></script>
+	<script src="{%static 'js/scripts.js'%}"></script>
+</body>
 </html>

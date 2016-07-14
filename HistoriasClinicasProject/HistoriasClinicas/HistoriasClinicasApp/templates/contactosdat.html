@@ -1,0 +1,92 @@
+{%extends "index.html"%}
+
+{%load static%}
+{% block head %}
+<link rel="stylesheet" type="text/css" href="{%static 'dataTables/media/css/jquery.dataTables.css'%}">
+<link rel="stylesheet" type="text/css" href="{%static 'dataTables/examples/resources/syntax/shCore.css'%}">
+<link rel="stylesheet" type="text/css" href="{%static 'dataTables/examples/resources/demo.css'%}">
+<style type="text/css" class="init">
+
+</style>
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.2/jquery.min.js"></script>
+<script type="text/javascript" language="javascript" src="{%static 'dataTables/media/js/jquery.dataTables.js'%}">
+</script>
+<script type="text/javascript" language="javascript" src="{%static 'dataTables/examples/resources/syntax/shCore.js'%}">
+</script>
+<script type="text/javascript" language="javascript" src="{%static 'dataTables/examples/resources/demo.js'%}">
+</script>
+<script type="text/javascript" language="javascript" class="init">
+
+	$(document).ready(function() {
+		$('#example').DataTable( {
+			"ajax": {
+				//"url": "data/objects_root_array.txt",
+				"url": "http://127.0.0.1:8000/buscontactosdat",
+				"dataSrc": ""
+			},
+			"columns": [
+			{ "data": "con_codigo" },
+			{ "data": "par_codigo__par_nombre" },
+			{ "data": "con_nombre" },
+			{ "data": "con_telefono" },
+			{ "data": "con_trabajo" }
+			]
+		} );
+	} );
+
+</script>
+
+{% endblock %}
+
+{%block dashboard%}
+
+<!--/col-->
+<div class="datos col-md-12">
+	<div class="panel panel-default">
+		<div class="panel-heading">
+			<h4>Listado de contactos de emergencia</h4></div>
+			<div class="panel-body">
+				<div class="table-responsive">
+					<table id="example" class="table display" cellspacing="0" width="100%">
+						<thead>
+							<tr>
+								<th>Código</br>Contacto</th>
+								<th>Parroquia</th>
+								<th>Nombre</br>Contacto</th>
+								<th>Teléfono</th>
+								<th>Trabajo</th>
+							</tr>
+						</thead>
+						<tfoot>
+							<tr>
+								<th>Código</br>Contacto</th>
+								<th>Parroquia</th>
+								<th>Nombre</br>Contacto</th>
+								<th>Teléfono</th>
+								<th>Trabajo</th>
+							</tr>
+						</tr>
+					</tfoot>
+				</table>
+			</div>
+		</div>
+	</div>
+	<!--/panel-->
+
+	<div class="panel panel-default">
+		<div class="panel-heading">
+			<div class="panel-title">
+				<h4>Engagement</h4></div>
+			</div>
+			<div class="panel-body">
+				<div class="col-xs-4 text-center"><img src="http://placehold.it/80/BBBBBB/FFF" class="img-circle img-responsive"></div>
+				<div class="col-xs-4 text-center"><img src="http://placehold.it/80/EFEFEF/555" class="img-circle img-responsive"></div>
+				<div class="col-xs-4 text-center"><img src="http://placehold.it/80/EEEEEE/222" class="img-circle img-responsive"></div>
+			</div>
+		</div>
+		<!--/panel-->
+
+	</div>
+	<!--/col-span-6-->
+
+	{%endblock%}

@@ -4,7 +4,7 @@
 {% block head %}
 <link rel="stylesheet" type="text/css" href="{%static 'dataTables/media/css/jquery.dataTables.css'%}">
 <link rel="stylesheet" type="text/css" href="{%static 'dataTables/examples/resources/syntax/shCore.css'%}">
-<link rel="stylesheet" type="text/css" href="{%static 'dataTables/examples/resources/demo.css'%}">
+<!-- <link rel="stylesheet" type="text/css" href="{%static 'dataTables/examples/resources/demo.css'%}"> -->
 <style type="text/css" class="init">
 
 </style>
@@ -18,20 +18,21 @@
 <script type="text/javascript" language="javascript" class="init">
 
 $(document).ready(function() {
-$('#example').DataTable( {
-	"ajax": {
-		//"url": "data/objects_root_array.txt",
-		"url": "http://127.0.0.1:8000/bushisclidat",
-		"dataSrc": ""
-	},
-	"columns": [
-		{ "data": "his_codigo" },
-		{ "data": "pac_cedula" },
-		{ "data": "con_codigo" },
-		{ "data": "his_fecha_creacion" },
-		{ "data": "his_hora_creacion" }
-	]
-} );
+	$('#example').DataTable( {
+		"ajax": {
+			//"url": "data/objects_root_array.txt",
+			"url": "http://127.0.0.1:8000/bushisclidat",
+			"dataSrc": ""
+		},
+		"columns": [
+			{ "data": "his_codigo" },
+			{ "data": "pac_cedula" },
+			{ "data": "pac_cedula__pac_nombre" },
+			{ "data": "con_codigo__con_nombre" },
+			{ "data": "his_fecha_creacion" },
+			{ "data": "his_hora_creacion" }
+		]
+	} );
 } );
 
 </script>
@@ -42,48 +43,40 @@ $('#example').DataTable( {
 
 <!--/col-->
 <div class="col-md-12">
-		<div class="panel panel-default">
-				<div class="panel-heading">
-						<h4>Historias Clinicas</h4></div>
-				<div class="panel-body">
-					<table id="example" class="display" cellspacing="0" width="100%">
+	<div class="panel panel-default">
+		<div class="panel-heading">
+			<h4>Listado de Historias Clinicas</h4></div>
+			<div class="panel-body">
+
+				<div class="table-responsive">
+					<table id="example" class="table display" cellspacing="0" width="100%">
 						<thead>
 							<tr>
-								<th>his_codigo</th>
-								<th>pac_cedula</th>
-								<th>con_codigo</th>
-								<th>his_fecha_creacion</th>
-								<th>his_hora_creacion</th>
+								<th>N° de Historia</th>
+								<th>Cédula</br>Paciente</th>
+								<th>Paciente</th>
+								<th>Contacto</th>
+								<th>Fecha de</br>Elaboración</th>
+								<th>Hora de</br>Elaboración</th>
 							</tr>
 						</thead>
 						<tfoot>
 							<tr>
-								<th>his_codigo</th>
-								<th>pac_cedula</th>
-								<th>con_codigo</th>
-								<th>his_fecha_creacion</th>
-								<th>his_hora_creacion</th>
+								<th>N° de Historia</th>
+								<th>Cédula</br>Paciente</th>
+								<th>Paciente</th>
+								<th>Contacto</th>
+								<th>Fecha de</br>Elaboración</th>
+								<th>Hora de</br>Elaboración</th>
 							</tr>
 						</tfoot>
 					</table>
 				</div>
+			</div>
 		</div>
 		<!--/panel-->
 
-		<div class="panel panel-default">
-				<div class="panel-heading">
-						<div class="panel-title">
-								<h4>Engagement</h4></div>
-				</div>
-				<div class="panel-body">
-						<div class="col-xs-4 text-center"><img src="http://placehold.it/80/BBBBBB/FFF" class="img-circle img-responsive"></div>
-						<div class="col-xs-4 text-center"><img src="http://placehold.it/80/EFEFEF/555" class="img-circle img-responsive"></div>
-						<div class="col-xs-4 text-center"><img src="http://placehold.it/80/EEEEEE/222" class="img-circle img-responsive"></div>
-				</div>
-		</div>
-		<!--/panel-->
+	</div>
+	<!--/col-span-6-->
 
-</div>
-<!--/col-span-6-->
-
-{%endblock%}
+	{%endblock%}

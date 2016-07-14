@@ -1,7 +1,7 @@
 
 @import url(http://fonts.googleapis.com/css?family=Raleway:100);
 
-body {
+.datos {
 	font: 90%/1.45em "Helvetica Neue", HelveticaNeue, Arial, Helvetica, sans-serif;
 	margin: 0;
 	padding: 0;
@@ -373,4 +373,3 @@ div.column_half {
 		display: block;
 	}
 }
-
