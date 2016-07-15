@@ -24,3 +24,17 @@ def contactosdat(request):
 	return render_to_response('contactosdat.html', context=RequestContext(request))
 def template(request):
 	return render_to_response('template.html', context=RequestContext(request))
+def mapsprov(request):
+	lugar = Provincia.objects.all().values('pro_nombre','pro_latitud', 'pro_longitud', 'pro_codigo')
+	diccionario = []
+	for lugares in lugar:
+		a = HistoriaClinica.objects.filter(pac_cedula__par_codigo__can_codigo__pro_codigo = lugares['pro_codigo'])
+		diccionario.append({'provincia':lugares['pro_nombre'],'cantidad':len(a), 'latitud':lugares['pro_latitud'], 'longitud':lugares['pro_longitud'], 'porcentaje':(len(a)*100)/16771})
+	return render(request, 'mapsprov.html', {'lugar':lugar, 'diccionario':diccionario})
+def mapscant(request):
+	lugar = Canton.objects.all().values('can_codigo','pro_codigo', 'can_nombre', 'latitud', 'longitud')
+	diccionario = []
+	for lugares in lugar:
+		a = HistoriaClinica.objects.filter(pac_cedula__par_codigo__can_codigo = lugares['can_codigo'])
+		diccionario.append({'canton':lugares['can_nombre'],'cantidad':len(a), 'latitud':lugares['latitud'], 'longitud':lugares['longitud'], 'porcentaje':(len(a)*100)/16771})
+	return render(request, 'mapscant.html', {'lugar':lugar, 'diccionario':diccionario})

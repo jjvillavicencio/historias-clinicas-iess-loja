@@ -9,4 +9,6 @@ url(r'^pacientedat', 'pacientedat', name='pacientedat'),
 url(r'^buspacientedat', 'buspacientedat', name='buspacientedat'),
 url(r'^buscontactosdat', 'buscontactosdat', name='buscontactosdat'),
 url(r'^contactosdat', 'contactosdat', name='contactosdat'),
+url(r'^mapsprov', 'mapsprov', name='mapsprov'),
+url(r'^mapscant', 'mapscant', name='mapscant'),
 )

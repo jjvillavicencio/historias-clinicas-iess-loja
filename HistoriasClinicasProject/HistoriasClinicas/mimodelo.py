@@ -82,6 +82,8 @@ class Canton(models.Model):
     can_codigo = models.CharField(primary_key=True, max_length=10)
     pro_codigo = models.ForeignKey('Provincia', db_column='pro_codigo', blank=True, null=True)
     can_nombre = models.CharField(max_length=60, blank=True, null=True)
+    latitud = models.CharField(max_length=18, blank=True, null=True)
+    longitud = models.CharField(max_length=18, blank=True, null=True)
 
     class Meta:
         managed = False
@@ -196,6 +198,8 @@ class Provincia(models.Model):
     pro_codigo = models.CharField(primary_key=True, max_length=10)
     pai_codigo = models.ForeignKey(Pais, db_column='pai_codigo', blank=True, null=True)
     pro_nombre = models.CharField(max_length=60, blank=True, null=True)
+    pro_latitud = models.CharField(max_length=16, blank=True, null=True)
+    pro_longitud = models.CharField(max_length=16, blank=True, null=True)
 
     class Meta:
         managed = False
