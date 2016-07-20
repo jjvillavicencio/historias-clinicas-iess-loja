@@ -2,16 +2,25 @@
 
 {%load static%}
 {% block head %}
+	<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.2/jquery.min.js"></script>
+{% endblock %}
 
+{%block ruta%}
+<a href="/">Principal</a>
+<i class="glyphicon glyphicon-chevron-right"></i>
+<a href="/hisclidat">Listado de Historias Clínicas</a>
+<i class="glyphicon glyphicon-chevron-right"></i>
+<a href="/perfiles/{{per.his_codigo}}/">Historia Clínica</a>
 {% endblock %}
 
 {%block dashboard%}
+{% for per in perfil %}
 <center>
 
 <img src="{%static 'img/perfil.png'%}" height="120px" width="120px" class="img-circle img-responsive">
 <p>
-	<span>Nombre</span></br>
-	<span>cedula</span>
+	<span>{{per.pac_cedula__pac_nombre}}</span></br>
+	<span>{{per.pac_cedula}}</span>
 </p>
 
 
@@ -24,42 +33,43 @@
 	<tbody>
 		<tr>
 			<th scope="row">Código Historia:</th>
-			<td>Mark</td>
+			<td>{{per.his_codigo}}</td>
 		</tr>
 		<tr>
 			<th scope="row">Fecha de nacimiento:</th>
-			<td>Mark</td>
+			<td>{{per.pac_cedula__pac_fecha_nac}}</td>
 		</tr>
 		<tr>
 			<th scope="row">Género:</th>
-			<td>Mark</td>
+			<td>{{per.pac_cedula__sexo}}</td>
 		</tr>
 		<tr>
 			<th scope="row">Dirección:</th>
-			<td>Mark</td>
+			<td>{{per.pac_cedula__pac_direccion}}</td>
 		</tr>
 		<tr>
 			<th scope="row">Teléfono:</th>
-			<td>Mark</td>
+			<td>{{per.pac_cedula__pac_telefono}}</td>
 		</tr>
 		<tr>
 			<th scope="row">Fecha de creación:</th>
-			<td>Mark</td>
+			<td>{{per.his_fecha_creacion}}</td>
 		</tr>
 		<tr>
 			<th scope="row">Hora de creación:</th>
-			<td>Jacob</td>
+			<td>{{per.his_hora_creacion}}</td>
 		</tr>
 		<tr>
 			<th scope="row">Contacto emergencia:</th>
-			<td>Larry</td>
+			<td>{{per.con_codigo__con_nombre}}</td>
 		</tr>
 		<tr>
 			<th scope="row">Contacto Teléfono:</th>
-			<td>Larry</td>
+			<td>{{per.con_codigo__con_telefono}}</td>
 		</tr>
 	</tbody>
 </table>
 
 </center>
+{% endfor %}
 {%endblock%}

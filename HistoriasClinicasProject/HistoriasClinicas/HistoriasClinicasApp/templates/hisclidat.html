@@ -16,31 +16,60 @@
 <script type="text/javascript" language="javascript" src="{%static 'dataTables/examples/resources/demo.js'%}">
 </script>
 <script type="text/javascript" language="javascript" class="init">
+//
+// $(document).ready(function() {
+// 	$('#example').DataTable( {
+// 		"ajax": {
+// 			//"url": "data/objects_root_array.txt",
+// 			"url": "http://127.0.0.1:8000/bushisclidat",
+// 			"dataSrc": ""
+// 		},
+// 		"columns": [
+// 			{ "data": "his_codigo" },
+// 			{ "data": "pac_cedula" },
+// 			{ "data": "pac_cedula__pac_nombre" },
+// 			{ "data": "con_codigo__con_nombre" },
+// 			{ "data": "his_fecha_creacion" },
+// 			{ "data": "his_hora_creacion" }
+// 		]
+// 	} );
+// } );
 
 $(document).ready(function() {
-	$('#example').DataTable( {
-		"ajax": {
-			//"url": "data/objects_root_array.txt",
-			"url": "http://127.0.0.1:8000/bushisclidat",
-			"dataSrc": ""
-		},
-		"columns": [
-			{ "data": "his_codigo" },
-			{ "data": "pac_cedula" },
-			{ "data": "pac_cedula__pac_nombre" },
-			{ "data": "con_codigo__con_nombre" },
-			{ "data": "his_fecha_creacion" },
-			{ "data": "his_hora_creacion" }
-		]
-	} );
-} );
+    $('#example').DataTable( {
+        initComplete: function () {
+            this.api().columns().every( function () {
+                var column = this;
+                var select = $('<select><option value=""></option></select>')
+                    .appendTo( $(column.footer()).empty() )
+                    .on( 'change', function () {
+                        var val = $.fn.dataTable.util.escapeRegex(
+                            $(this).val()
+                        );
 
+                        column
+                            .search( val ? '^'+val+'$' : '', true, false )
+                            .draw();
+                    } );
+
+                column.data().unique().sort().each( function ( d, j ) {
+                    select.append( '<option value="'+d+'">'+d+'</option>' )
+                } );
+            } );
+        }
+    } );
+} );
 </script>
 
 {% endblock %}
 
-{%block dashboard%}
+{%block ruta%}
+<a href="/">Principal</a>
+<i class="glyphicon glyphicon-chevron-right"></i>
+<a href="/hisclidat">Listado de Historias Clínicas</a>
+{% endblock %}
 
+{%block dashboard%}
 <!--/col-->
 <div class="col-md-12">
 	<div class="panel panel-default">
@@ -49,7 +78,7 @@ $(document).ready(function() {
 			<div class="panel-body">
 
 				<div class="table-responsive">
-					<table id="example" class="table display" cellspacing="0" width="100%">
+					<table id="example" class="display" cellspacing="0" width="100%">
 						<thead>
 							<tr>
 								<th>N° de Historia</th>
@@ -70,13 +99,25 @@ $(document).ready(function() {
 								<th>Hora de</br>Elaboración</th>
 							</tr>
 						</tfoot>
+						<tbody>
+							{% for hist in historias %}
+							<tr>
+								<td><a href="/perfiles/{{hist.his_codigo}}/">{{hist.his_codigo}}</a></td>
+								<td>{{hist.pac_cedula}}</td>
+								<td>{{hist.pac_cedula__pac_nombre}}</td>
+								<td>{{hist.con_codigo__con_nombre}}</td>
+								<td>{{hist.his_fecha_creacion}}</td>
+								<td>{{hist.his_hora_creacion}}</td>
+							</tr>
+							{% endfor %}
+
+						</tbody>
 					</table>
 				</div>
 			</div>
 		</div>
-		<!--/panel-->
-
 	</div>
+</div>
 	<!--/col-span-6-->
 
 	{%endblock%}

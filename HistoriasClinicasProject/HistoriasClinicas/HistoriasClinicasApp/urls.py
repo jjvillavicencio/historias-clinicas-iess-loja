@@ -11,5 +11,5 @@ url(r'^buscontactosdat', 'buscontactosdat', name='buscontactosdat'),
 url(r'^contactosdat', 'contactosdat', name='contactosdat'),
 url(r'^mapsprov', 'mapsprov', name='mapsprov'),
 url(r'^mapscant', 'mapscant', name='mapscant'),
-url(r'^perfiles', 'perfiles', name='perfiles'),
+url(r'^perfiles/(?P<codPac>[^/]+)/$', 'perfiles', name='perfiles'),
 )

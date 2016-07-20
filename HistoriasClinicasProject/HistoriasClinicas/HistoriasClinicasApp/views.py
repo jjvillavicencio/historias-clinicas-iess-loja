@@ -11,7 +11,8 @@ def bushisclidat(request):
 	historias = HistoriaClinica.objects.all().values('his_codigo', 'pac_cedula', 'pac_cedula__pac_nombre', 'con_codigo__con_nombre', 'his_fecha_creacion', 'his_hora_creacion')
 	return HttpResponse(json.dumps(list(historias), cls=DjangoJSONEncoder), content_type = 'application/json')
 def hisclidat(request):
-	return render_to_response('hisclidat.html', context=RequestContext(request))
+	historias = HistoriaClinica.objects.all().values('his_codigo', 'pac_cedula', 'pac_cedula__pac_nombre', 'con_codigo__con_nombre', 'his_fecha_creacion', 'his_hora_creacion')
+	return render_to_response('hisclidat.html', {'historias':historias})
 def buspacientedat(request):
 	pacientes = Paciente.objects.all().values('pac_cedula', 'tip_codigo__tip_nombre', 'can_codigo__can_nombre', 'par_codigo__par_nombre', 'pac_codigo', 'pac_nombre', 'pac_fecha_nac', 'sexo', 'pac_direccion', 'pac_telefono')
 	return HttpResponse(json.dumps(list(pacientes), cls=DjangoJSONEncoder), content_type = 'application/json')
@@ -38,6 +39,7 @@ def mapscant(request):
 		a = HistoriaClinica.objects.filter(pac_cedula__par_codigo__can_codigo = lugares['can_codigo'])
 		diccionario.append({'canton':lugares['can_nombre'],'cantidad':len(a), 'latitud':lugares['latitud'], 'longitud':lugares['longitud'], 'porcentaje':(len(a)*100)/16771})
 	return render(request, 'mapscant.html', {'lugar':lugar, 'diccionario':diccionario})
-def perfiles(request):
+def perfiles(request, codPac=None):
+	perfil = HistoriaClinica.objects.filter(his_codigo = codPac).values('pac_cedula__pac_nombre', 'his_codigo', 'pac_cedula', 'pac_cedula__pac_fecha_nac', 'pac_cedula__sexo', 'pac_cedula__pac_direccion', 'pac_cedula__pac_telefono', 'his_fecha_creacion', 'his_hora_creacion', 'con_codigo__con_nombre', 'con_codigo__con_telefono')
 
-	return render(request, 'perfiles.html')
+	return render(request, 'perfiles.html', {'perfil':perfil})
