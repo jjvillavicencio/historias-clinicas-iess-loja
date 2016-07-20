@@ -38,3 +38,6 @@ def mapscant(request):
 		a = HistoriaClinica.objects.filter(pac_cedula__par_codigo__can_codigo = lugares['can_codigo'])
 		diccionario.append({'canton':lugares['can_nombre'],'cantidad':len(a), 'latitud':lugares['latitud'], 'longitud':lugares['longitud'], 'porcentaje':(len(a)*100)/16771})
 	return render(request, 'mapscant.html', {'lugar':lugar, 'diccionario':diccionario})
+def perfiles(request):
+
+	return render(request, 'perfiles.html')

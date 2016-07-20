@@ -3,3 +3,13 @@
 	height: 108px;
 	margin-bottom: 25px;
 }
+
+
+
+.nav-bar-mdf a:hover {
+		color: white !important;
+}
+
+.prueba{
+	margin-top: 7%;
+}

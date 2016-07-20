@@ -2,12 +2,12 @@
 
 {%load static%}
 {% block head %}
-	<link href="{%static 'css/styles.css'%}" rel="stylesheet">
-	<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.2/jquery.min.js"></script>
+<link href="{%static 'css/styles.css'%}" rel="stylesheet">
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.2/jquery.min.js"></script>
 
 <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
 <script src="https://maps.googleapis.com/maps/api/js?v=3.exp"></script>
-<script>
+	<script>
 	function initialize(){
 		var myLatlng = new google.maps.LatLng(-2.524406, -78.929772);
 		var mapOptions = {
@@ -17,26 +17,53 @@
 		var map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
 
 		{% for dic in diccionario %}
-			{% if dic.cantidad != 0 %}
-				var marcador = new google.maps.LatLng({{dic.latitud}}, {{dic.longitud}});
-				var marker = new google.maps.Marker({
-					position: marcador,
-					primaryColor: '#15a2cd',
-					map: map,
-					title: '{{dic.provincia}}'
-				});
-				google.maps.event.addListener(marker, 'click', function(){
-					var popup = new google.maps.InfoWindow();
-					var note = '{{dic.cantidad}} registros en {{dic.provincia}} ';
-					popup.setContent(note);
-					popup.open(map, this);
-				})
-			{% endif %}
+		{% if dic.cantidad != 0 %}
+		var marcador = new google.maps.LatLng({{dic.latitud}}, {{dic.longitud}});
+		var marker = new google.maps.Marker({
+			position: marcador,
+			primaryColor: '#15a2cd',
+			map: map,
+			title: '{{dic.provincia}}'
+		});
+		google.maps.event.addListener(marker, 'click', function(){
+			var popup = new google.maps.InfoWindow();
+			var note = '{{dic.cantidad}} registros en <a href="#">{{dic.provincia}}</a>';
+			popup.setContent(note);
+			popup.open(map, this);
+		})
+		{% endif %}
 		{% endfor %}
 
 	}
 	google.maps.event.addDomListener(window, 'load', initialize);
-</script>
+	</script>
+
+	<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+
+	<script type="text/javascript">
+      google.charts.load("current", {packages:["corechart"]});
+      google.charts.setOnLoadCallback(drawChart);
+      function drawChart() {
+        var data = google.visualization.arrayToDataTable([
+
+          ['Provincia', 'Cant. Pacientes'],
+          {% for dic in diccionario %}
+						{% if dic.cantidad != 0 %}
+							['{{dic.provincia}}', {{dic.cantidad}}],
+						{% endif %}
+					{% endfor %}
+        ]);
+
+        var options = {
+          title: '',
+          pieHole: 0.4,
+        };
+
+        var chart = new google.visualization.PieChart(document.getElementById('chart_div'));
+        chart.draw(data, options);
+      }
+    </script>
+
 
 {% endblock %}
 
@@ -56,17 +83,7 @@
 			<div class="panel-heading">
 				<h4>Porcentajes</h4></div>
 				<div class="panel-body">
-
-					{% for dic in diccionario %}
-						{% if dic.cantidad != 0 %}
-							<small>{{dic.provincia}}</small>
-							<div class="progress">
-								<div class="progress-bar progress-bar-info progress-bar-striped active" role="progressbar" aria-valuenow="{{dic.porcentaje}}" aria-valuemin="0" aria-valuemax="100" style="width: {{dic.porcentaje}}%">
-								</div>
-								<span class="">{{dic.porcentaje}}% - {{dic.cantidad}} registros </span>
-							</div>
-	 					{% endif %}
-					{% endfor %}
+					<div id="chart_div" style="width: auto; height: 500px;"></div>
 				</div>
 			</div>
 		</div>
