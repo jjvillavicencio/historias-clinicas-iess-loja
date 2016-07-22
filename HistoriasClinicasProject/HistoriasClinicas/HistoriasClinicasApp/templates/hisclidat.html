@@ -16,51 +16,84 @@
 <script type="text/javascript" language="javascript" src="{%static 'dataTables/examples/resources/demo.js'%}">
 </script>
 <script type="text/javascript" language="javascript" class="init">
-//
-// $(document).ready(function() {
-// 	$('#example').DataTable( {
-// 		"ajax": {
-// 			//"url": "data/objects_root_array.txt",
-// 			"url": "http://127.0.0.1:8000/bushisclidat",
-// 			"dataSrc": ""
-// 		},
-// 		"columns": [
-// 			{ "data": "his_codigo" },
-// 			{ "data": "pac_cedula" },
-// 			{ "data": "pac_cedula__pac_nombre" },
-// 			{ "data": "con_codigo__con_nombre" },
-// 			{ "data": "his_fecha_creacion" },
-// 			{ "data": "his_hora_creacion" }
-// 		]
-// 	} );
-// } );
 
 $(document).ready(function() {
-    $('#example').DataTable( {
-        initComplete: function () {
-            this.api().columns().every( function () {
-                var column = this;
-                var select = $('<select><option value=""></option></select>')
-                    .appendTo( $(column.footer()).empty() )
-                    .on( 'change', function () {
-                        var val = $.fn.dataTable.util.escapeRegex(
-                            $(this).val()
-                        );
-
-                        column
-                            .search( val ? '^'+val+'$' : '', true, false )
-                            .draw();
-                    } );
-
-                column.data().unique().sort().each( function ( d, j ) {
-                    select.append( '<option value="'+d+'">'+d+'</option>' )
-                } );
-            } );
-        }
-    } );
+	$('#example').DataTable( {
+		"ajax": {
+			"url": "http://127.0.0.1:8000/bushisclidat",
+			"dataSrc": ""
+		},
+		"columns": [
+			{ "data": "his_codigo" },
+			{ "data": "pac_cedula" },
+			{ "data": "pac_nombre" },
+			{ "data": "pac_provincia" },
+			{ "data": "pac_canton" },
+			{ "data": "con_nombre" },
+			{ "data": "his_fecha_creacion" },
+			{ "data": "his_hora_creacion" }
+		]
+	} );
 } );
+
+</script>
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+
+<script type="text/javascript">
+	google.charts.load('current', {'packages':['corechart']});
+	google.charts.setOnLoadCallback(drawChart);
+
+	function drawChart() {
+
+		// Create the data table.
+		var data = new google.visualization.DataTable();
+		data.addColumn('string', 'Tipo de seguro');
+		data.addColumn('number', 'Cantidad');
+		var d = [];
+		{% for tip in datos_tipos %}
+			{% if tip.cantidad != 0 %}
+				d.push(['{{tip.tip_nombre}}', {{tip.tip_cantidad}}])
+			{% endif %}
+		{% endfor %}
+		console.log(d);
+		data.addRows(d);
+
+		// Set chart options
+		var options = {'title':'Tipos de afiliación Enero 2015 - Marzo 2016',
+		'width':'auto',
+		'height':500};
+
+		// Instantiate and draw our chart, passing in some options.
+		var chart = new google.visualization.PieChart(document.getElementById('chart_div'));
+		chart.draw(data, options);
+
+		// Create the data table.
+		var data2 = new google.visualization.DataTable();
+		data2.addColumn('string', 'Género');
+		data2.addColumn('number', 'Cantidad');
+		var d2 = [];
+		{% for dat in datos_genero %}
+			{% if dat.cantidad != 0 %}
+				d2.push(['{{dat.genero}}', {{dat.gen_cantidad}}])
+			{% endif %}
+		{% endfor %}
+		console.log(d2);
+		data2.addRows(d2);
+		var options2 = {
+      title: 'Estadísticas por género',
+      pieHole: 0.4,
+			'width':'auto',
+			'height':500};
+
+    var chart = new google.visualization.PieChart(document.getElementById('donutchart'));
+    chart.draw(data2, options2);
+	}
 </script>
 
+
+
+<script src="https://code.highcharts.com/highcharts.js"></script>
+<script src="https://code.highcharts.com/modules/exporting.js"></script>
 {% endblock %}
 
 {%block ruta%}
@@ -70,6 +103,19 @@ $(document).ready(function() {
 {% endblock %}
 
 {%block dashboard%}
+<div class="col-md-12">
+	<div class="panel panel-default">
+		<div class="panel-heading">
+			<h4>Gráficos estadísticos</h4>
+		</div>
+		<div class="panel-body">
+			<div id="chart_div">
+			</div>
+			<div id="donutchart"></div>
+
+		</div>
+	</div>
+</div>
 <!--/col-->
 <div class="col-md-12">
 	<div class="panel panel-default">
@@ -78,40 +124,32 @@ $(document).ready(function() {
 			<div class="panel-body">
 
 				<div class="table-responsive">
-					<table id="example" class="display" cellspacing="0" width="100%">
-						<thead>
-							<tr>
-								<th>N° de Historia</th>
-								<th>Cédula</br>Paciente</th>
-								<th>Paciente</th>
-								<th>Contacto</th>
-								<th>Fecha de</br>Elaboración</th>
-								<th>Hora de</br>Elaboración</th>
-							</tr>
-						</thead>
-						<tfoot>
-							<tr>
-								<th>N° de Historia</th>
-								<th>Cédula</br>Paciente</th>
-								<th>Paciente</th>
-								<th>Contacto</th>
-								<th>Fecha de</br>Elaboración</th>
-								<th>Hora de</br>Elaboración</th>
+						<table id="example" class="table display" cellspacing="0" width="100%">
+							<thead>
+								<tr>
+									<th>N° de Historia</th>
+									<th>Cédula</br>Paciente</th>
+									<th>Paciente</th>
+									<th>Provincia</th>
+									<th>Cantón</th>
+									<th>Contacto</th>
+									<th>Fecha de</br>Elaboración</th>
+									<th>Hora de</br>Elaboración</th>
+								</tr>
+							</thead>
+							<tfoot>
+								<tr>
+									<th>N° de Historia</th>
+									<th>Cédula</br>Paciente</th>
+									<th>Paciente</th>
+									<th>Provincia</th>
+									<th>Cantón</th>
+									<th>Contacto</th>
+									<th>Fecha de</br>Elaboración</th>
+									<th>Hora de</br>Elaboración</th>
+								</tr>
 							</tr>
 						</tfoot>
-						<tbody>
-							{% for hist in historias %}
-							<tr>
-								<td><a href="/perfiles/{{hist.his_codigo}}/">{{hist.his_codigo}}</a></td>
-								<td>{{hist.pac_cedula}}</td>
-								<td>{{hist.pac_cedula__pac_nombre}}</td>
-								<td>{{hist.con_codigo__con_nombre}}</td>
-								<td>{{hist.his_fecha_creacion}}</td>
-								<td>{{hist.his_hora_creacion}}</td>
-							</tr>
-							{% endfor %}
-
-						</tbody>
 					</table>
 				</div>
 			</div>

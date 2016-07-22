@@ -12,4 +12,6 @@ url(r'^contactosdat', 'contactosdat', name='contactosdat'),
 url(r'^mapsprov', 'mapsprov', name='mapsprov'),
 url(r'^mapscant', 'mapscant', name='mapscant'),
 url(r'^perfiles/(?P<codPac>[^/]+)/$', 'perfiles', name='perfiles'),
+url(r'^provinciaId/(?P<codProv>[^/]+)/$', 'provinciaId', name='provinciaId'),
+url(r'^cantonId/(?P<codCanton>[^/]+)/$', 'cantonId', name='cantonId'),
 )
