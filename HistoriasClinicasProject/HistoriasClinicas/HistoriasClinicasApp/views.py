@@ -59,7 +59,10 @@ def hisclidat(request):
 	for gen in generos:
 		obj = {}
 		cantidad = HistoriaClinica.objects.filter(pac_cedula__sexo = gen['pac_cedula__sexo']).count()
-		obj['genero'] = gen['pac_cedula__sexo']
+		if gen['pac_cedula__sexo'] == 'M':
+			obj['genero'] = 'Masculino'
+		if gen['pac_cedula__sexo'] == 'F':
+			obj['genero'] = 'Femenino'
 		obj['gen_cantidad'] = cantidad
 		datos_generos.append(obj)
 
@@ -90,24 +93,42 @@ def template(request):
 
 def mapsprov(request):
 	lugar = Provincia.objects.all().values('pro_nombre','pro_latitud', 'pro_longitud', 'pro_codigo')
+
 	diccionario = []
 	for lugares in lugar:
 		a = HistoriaClinica.objects.filter(pac_cedula__par_codigo__can_codigo__pro_codigo = lugares['pro_codigo'])
-		diccionario.append({'provincia':lugares['pro_nombre'],'cantidad':len(a), 'latitud':lugares['pro_latitud'], 'longitud':lugares['pro_longitud'], 'porcentaje':(len(a)*100)/16771})
+
+		diccionario.append(
+		{'provincia':lugares['pro_nombre'],
+		'cantidad':len(a),
+		'latitud':lugares['pro_latitud'],
+		'longitud':lugares['pro_longitud'],
+		'codigo':lugares['pro_codigo'],
+		'porcentaje':(len(a)*100)/16771})
+
 	return render(request, 'mapsprov.html', {'lugar':lugar, 'diccionario':diccionario})
 
 
 def mapscant(request):
 	lugar = Canton.objects.all().values('can_codigo','pro_codigo', 'can_nombre', 'latitud', 'longitud')
 	diccionario = []
+
 	for lugares in lugar:
 		a = HistoriaClinica.objects.filter(pac_cedula__par_codigo__can_codigo = lugares['can_codigo'])
-		diccionario.append({'canton':lugares['can_nombre'],'cantidad':len(a), 'latitud':lugares['latitud'], 'longitud':lugares['longitud'], 'porcentaje':(len(a)*100)/16771})
+
+		diccionario.append({
+		'canton':lugares['can_nombre'],
+		'cantidad':len(a),
+		'latitud':lugares['latitud'],
+		'longitud':lugares['longitud'],
+		'codigo':lugares['can_codigo'],
+		'porcentaje':(len(a)*100)/16771})
+
 	return render(request, 'mapscant.html', {'lugar':lugar, 'diccionario':diccionario})
 
 
 def perfiles(request, codPac=None):
-	perfil = HistoriaClinica.objects.filter(his_codigo = codPac).values('pac_cedula__pac_nombre', 'his_codigo', 'pac_cedula', 'pac_cedula__pac_fecha_nac', 'pac_cedula__sexo', 'pac_cedula__pac_direccion', 'pac_cedula__pac_telefono', 'his_fecha_creacion', 'his_hora_creacion', 'con_codigo__con_nombre', 'con_codigo__con_telefono')
+	perfil = HistoriaClinica.objects.filter(his_codigo = codPac).values('pac_cedula__pac_nombre', 'his_codigo', 'pac_cedula', 'pac_cedula__pac_fecha_nac', 'pac_cedula__sexo', 'pac_cedula__pac_direccion', 'pac_cedula__pac_telefono', 'his_fecha_creacion', 'his_hora_creacion', 'con_codigo__con_nombre', 'con_codigo__con_telefono', 'pac_cedula__can_codigo__can_nombre', 'pac_cedula__can_codigo__pro_codigo__pro_nombre', 'pac_cedula__can_codigo', 'pac_cedula__can_codigo__pro_codigo')
 
 	return render(request, 'perfiles.html', {'perfil':perfil})
 
@@ -127,9 +148,48 @@ def provinciaId(request, codProv=None):
 
 	a = nombre[0]['pro_nombre']
 
-	return render(request, 'provinciaid.html', {'datos_tipos':datos_tipos, 'provincia':a})
+	generos = HistoriaClinica.objects.all().values('pac_cedula__sexo').distinct()
+	datos_generos = [];
+
+	for gen in generos:
+		obj = {}
+		cantidad = HistoriaClinica.objects.filter(pac_cedula__sexo = gen['pac_cedula__sexo'], pac_cedula__can_codigo__pro_codigo__pro_nombre = a).count()
+		if gen['pac_cedula__sexo'] == 'M':
+			obj['genero'] = 'Masculino'
+		if gen['pac_cedula__sexo'] == 'F':
+			obj['genero'] = 'Femenino'
+		obj['gen_cantidad'] = cantidad
+		datos_generos.append(obj)
+
+	return render(request, 'provinciaid.html', {'datos_tipos':datos_tipos, 'provincia':a, 'gener_dat':datos_generos})
 
 
 def cantonId(request, codCanton=None):
+	tipos = TipoBeneficiario.objects.all().values('tip_codigo', 'tip_nombre')
+	nombre = Canton.objects.filter(can_codigo = codCanton).values('can_nombre')
+	datos_tipos = [];
 
-	return render(request, 'cantonid.html', {'perfil':perfil})
+	for tip in tipos:
+		obj = {}
+		cantidad = HistoriaClinica.objects.filter(pac_cedula__tip_codigo = tip['tip_codigo'], pac_cedula__can_codigo = codCanton).count()
+		obj['tip_codigo'] = tip['tip_codigo']
+		obj['tip_nombre'] = tip['tip_nombre']
+		obj['tip_cantidad'] = cantidad
+		datos_tipos.append(obj)
+
+	a = nombre[0]['can_nombre']
+
+	generos = HistoriaClinica.objects.all().values('pac_cedula__sexo').distinct()
+	datos_generos = [];
+
+	for gen in generos:
+		obj = {}
+		cantidad = HistoriaClinica.objects.filter(pac_cedula__sexo = gen['pac_cedula__sexo'], pac_cedula__can_codigo__can_nombre = a).count()
+		if gen['pac_cedula__sexo'] == 'M':
+			obj['genero'] = 'Masculino'
+		if gen['pac_cedula__sexo'] == 'F':
+			obj['genero'] = 'Femenino'
+		obj['gen_cantidad'] = cantidad
+		datos_generos.append(obj)
+
+	return render(request, 'cantonid.html', {'datos_tipos':datos_tipos, 'canton':a, 'gener_dat':datos_generos})

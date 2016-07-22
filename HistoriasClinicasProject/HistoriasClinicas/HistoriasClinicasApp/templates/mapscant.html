@@ -27,7 +27,7 @@
 				});
 				google.maps.event.addListener(marker, 'click', function(){
 					var popup = new google.maps.InfoWindow();
-					var note = '{{dic.cantidad}} registros en <a href="#">{{dic.canton}}</a> ';
+					var note = '{{dic.cantidad}} registros en <a href="/cantonId/{{dic.codigo}}/">{{dic.canton}}</a> ';
 					popup.setContent(note);
 					popup.open(map, this);
 				})
@@ -41,7 +41,7 @@
 
 	<script type="text/javascript">
 	// Load the Visualization API and the corechart package.
-		google.charts.load('current', {'packages':['corechart']});
+		google.charts.load('current', {'packages':['corechart','table']});
 
 		// Set a callback to run when the Google Visualization API is loaded.
 		google.charts.setOnLoadCallback(drawChart);
@@ -64,14 +64,35 @@
 			]);
 
 			// Set chart options
-			var options = {'title':'',
+			var options = {'title':'Distribución de pacientes por cantón',
 			'width':'auto',
-			'height':500};
+			'height':500,
+			allowHtml: true};
 
 			// Instantiate and draw our chart, passing in some options.
 			var chart = new google.visualization.PieChart(document.getElementById('chart_div'));
 			chart.draw(data, options);
 		}
+
+    google.charts.setOnLoadCallback(drawTable);
+		function drawTable() {
+			var data2 = new google.visualization.DataTable();
+			data2.addColumn('string', 'Provincia');
+			data2.addColumn('number', 'Cantidad de pacientes');
+			data2.addRows([
+				{% for dic in diccionario %}
+					{% if dic.cantidad != 0 %}
+						['<a href="/cantonId/{{dic.codigo}}/">{{dic.canton}}</a>', {{dic.cantidad}}],
+					{% endif %}
+				{% endfor %}
+			]);
+
+			var table = new google.visualization.Table(document.getElementById('table_div'));
+
+			table.draw(data2, {showRowNumber: true, width: '100%', height: '100%', allowHtml: true});
+		}
+
+
 	</script>
 
 	<script src="https://code.highcharts.com/highcharts.js"></script>
@@ -130,7 +151,7 @@
 <div class="col-md-12">
 	<div class="panel panel-default">
 		<div class="panel-heading">
-			<h4>Distribución de los pacientes por cantón</h4></div>
+			<h4>Distribución de la procedencia de los pacientes por cantón</h4></div>
 			<div class="panel-body">
 				<section id="map-canvas" style="height:500px; width=auto"></section>
 			</div>
@@ -140,9 +161,10 @@
 	<div class="col-md-12">
 		<div class="panel panel-default">
 			<div class="panel-heading">
-				<h4>Porcentajes</h4></div>
+				<h4>Gráficos estadísticos</h4></div>
 				<div class="panel-body">
 					<div id="chart_div"></div>
+					<div id="table_div" style="width: auto; height: 300px;"></div>
 				</div>
 			</div>
 		</div>

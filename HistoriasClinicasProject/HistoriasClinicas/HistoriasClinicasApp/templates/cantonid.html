@@ -1,159 +1,105 @@
 {%extends "index.html"%}
 
 {%load static%}
+
 {% block head %}
-	<link href="{%static 'css/styles.css'%}" rel="stylesheet">
-	<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.2/jquery.min.js"></script>
+<link href="{%static 'css/styles.css'%}" rel="stylesheet">
+<link href="{%static 'css/styles_menu_lat.css'%}" rel="stylesheet">
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.2/jquery.min.js"></script>
 
-	<meta name="viewport" content="initial-scale=1.0, user-scalable=no">
-	<script src="https://maps.googleapis.com/maps/api/js?v=3.exp"></script>
-	<script>
-	function initialize(){
-		var myLatlng = new google.maps.LatLng(-2.524406, -78.929772);
-		var mapOptions = {
-			zoom: 7,
-			center: myLatlng
-		}
-		var map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
+<meta name="viewport" content="initial-scale=1.0, user-scalable=no">
 
-		{% for dic in diccionario %}
-			{% if dic.cantidad != 0 %}
-				var marcador = new google.maps.LatLng({{dic.latitud}}, {{dic.longitud}});
-				var marker = new google.maps.Marker({
-					position: marcador,
-					primaryColor: '#15a2cd',
-					map: map,
-					title: '{{dic.canton}}'
-				});
-				google.maps.event.addListener(marker, 'click', function(){
-					var popup = new google.maps.InfoWindow();
-					var note = '{{dic.cantidad}} registros en <a href="#">{{dic.canton}}</a> ';
-					popup.setContent(note);
-					popup.open(map, this);
-				})
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+
+<script type="text/javascript">
+	google.charts.load('current', {'packages':['corechart']});
+	google.charts.setOnLoadCallback(drawChart);
+
+	function drawChart() {
+
+		// Create the data table.
+		var data = new google.visualization.DataTable();
+		data.addColumn('string', 'Tipo de seguro');
+		data.addColumn('number', 'Cantidad');
+		var d = [];
+		{% for tip in datos_tipos %}
+			{% if tip.cantidad != 0 %}
+				d.push(['{{tip.tip_nombre}}', {{tip.tip_cantidad}}])
 			{% endif %}
 		{% endfor %}
+		console.log(d);
+		data.addRows(d);
 
+		// Set chart options
+		var options = {'title':'Distribución por tipo de afiliación de Historias Clínicas \n del Cantón {{canton}}',
+		'width':'auto',
+		'height':500};
+
+		// Instantiate and draw our chart, passing in some options.
+		var chart = new google.visualization.PieChart(document.getElementById('chart_div'));
+		chart.draw(data, options);
 	}
-	google.maps.event.addDomListener(window, 'load', initialize);
-	</script>
-	<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+</script>
 
-	<script type="text/javascript">
-	// Load the Visualization API and the corechart package.
-		google.charts.load('current', {'packages':['corechart']});
+<script src="https://code.highcharts.com/highcharts.js"></script>
+<script src="https://code.highcharts.com/highcharts-3d.js"></script>
+<script src="https://code.highcharts.com/modules/exporting.js"></script>
 
-		// Set a callback to run when the Google Visualization API is loaded.
-		google.charts.setOnLoadCallback(drawChart);
-
-		// Callback that creates and populates a data table,
-		// instantiates the pie chart, passes in the data and
-		// draws it.
-		function drawChart() {
-
-			// Create the data table.
-			var data = new google.visualization.DataTable();
-			data.addColumn('string', 'Topping');
-			data.addColumn('number', 'Slices');
-			data.addRows([
-				{% for dic in diccionario %}
-					{% if dic.cantidad != 0 %}
-						['{{dic.canton}}', {{dic.cantidad}}],
-					{% endif %}
-				{% endfor %}
-			]);
-
-			// Set chart options
-			var options = {'title':'',
-			'width':'auto',
-			'height':500};
-
-			// Instantiate and draw our chart, passing in some options.
-			var chart = new google.visualization.PieChart(document.getElementById('chart_div'));
-			chart.draw(data, options);
-		}
-	</script>
-
-	<script src="https://code.highcharts.com/highcharts.js"></script>
-	<script src="https://code.highcharts.com/modules/exporting.js"></script>
-	<script type="text/javascript">
-	$(function () {
-		$('#chart_div2').highcharts({
-			chart: {
-				type: 'column'
-			},
-			title: {
-				text: 'IEES Enero 2015-Marzo 2016 '
-			},
-			subtitle: {
-				text: 'Cantones con más de 100 pacientes'
-			},
-			xAxis: {
-				categories: [
-					'Historias Clinicas'
-				],
-				crosshair: true
-			},
-			yAxis: {
-				min: 0,
-				title: {
-					text: 'Cantidad'
-				}
-			},
-			tooltip: {
-				headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
-				pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
-				'<td style="padding:0"><b>{point.y:.1f} </b></td></tr>',
-				footerFormat: '</table>',
-				shared: true,
-				useHTML: true
-			},
-			plotOptions: {
-				column: {
-					pointPadding: 0.2,
-					borderWidth: 0
-				}
-			},
-			series: [
-				{% for dic in diccionario %}
-					{% if dic.cantidad > 100 %}
-						{name:'{{dic.canton}}', data:[{{dic.cantidad}}]},
-					{% endif %}
-				{% endfor %}
-			]
-		});
+<script type="text/javascript">
+$(function () {
+	var d = [];
+	{% for tip in gener_dat %}
+		d.push(['{{tip.genero}}', {{tip.gen_cantidad}}])
+	{% endfor %}
+	$('#donut-3d').highcharts({
+		chart: {
+			type: 'pie',
+			options3d: {
+				enabled: true,
+				alpha: 45
+			}
+		},
+		title: {
+			text: 'Distribución por género de Historias Clínicas'
+		},
+		subtitle: {
+			text: 'Cantón de {{canton}}'
+		},
+		plotOptions: {
+			pie: {
+				innerSize: 100,
+				depth: 45
+			}
+		},
+		series: [{
+			name: 'Cantidad de Historias Clínicas',
+			data: d
+		}]
 	});
-	</script>
+});
+</script>
+
+
 {% endblock %}
 
+{%block container%}
+
+{%endblock%}
+
 {%block dashboard%}
+
 <div class="col-md-12">
 	<div class="panel panel-default">
 		<div class="panel-heading">
-			<h4>Distribución de los pacientes por cantón</h4></div>
-			<div class="panel-body">
-				<section id="map-canvas" style="height:500px; width=auto"></section>
+			<h4>Gráficos estadísticos</h4>
+		</div>
+		<div class="panel-body">
+			<div id="chart_div">
+			</div>
+			<div id="donut-3d" style="height: 400px">
 			</div>
 		</div>
 	</div>
+</div>
 
-	<div class="col-md-12">
-		<div class="panel panel-default">
-			<div class="panel-heading">
-				<h4>Porcentajes</h4></div>
-				<div class="panel-body">
-					<div id="chart_div"></div>
-				</div>
-			</div>
-		</div>
-	<div class="col-md-12">
-		<div class="panel panel-default">
-			<div class="panel-heading">
-				<h4>Procedencia de los Pacientes</h4></div>
-				<div class="panel-body">
-					<div id="chart_div2" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
-				</div>
-			</div>
-		</div>
-
-		{%endblock%}
+{%endblock%}

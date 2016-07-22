@@ -2,6 +2,8 @@
 
 {%load static%}
 {% block head %}
+<link href="{%static 'css/styles.css'%}" rel="stylesheet">
+<meta name="viewport" content="initial-scale=1.0, user-scalable=no">
 <link rel="stylesheet" type="text/css" href="{%static 'dataTables/media/css/jquery.dataTables.css'%}">
 <link rel="stylesheet" type="text/css" href="{%static 'dataTables/examples/resources/syntax/shCore.css'%}">
 <link rel="stylesheet" type="text/css" href="{%static 'dataTables/examples/resources/demo.css'%}">
@@ -41,12 +43,18 @@
 {%block dashboard%}
 
 <!--/col-->
-<div class="datos col-md-12">
+<div class=" col-md-12">
 	<div class="panel panel-default">
 		<div class="panel-heading">
 			<h4>Listado de contactos de emergencia</h4></div>
 			<div class="panel-body">
 				<div class="table-responsive">
+					<p>
+						<strong>
+							Listado de las personas que han servido como contacto de emergencia al crear una Historia clínica.
+						</strong>
+					</p>
+					<hr>
 					<table id="example" class="table display" cellspacing="0" width="100%">
 						<thead>
 							<tr>

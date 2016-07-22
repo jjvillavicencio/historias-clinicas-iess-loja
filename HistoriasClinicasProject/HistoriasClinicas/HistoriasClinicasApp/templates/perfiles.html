@@ -33,7 +33,11 @@
 	<tbody>
 		<tr>
 			<th scope="row">Código Historia:</th>
-			<td>{{per.his_codigo}}</td>
+			<td>
+				<a href="/perfiles/{{per.his_codigo}}/">
+					{{per.his_codigo}}
+				</a>
+			</td>
 		</tr>
 		<tr>
 			<th scope="row">Fecha de nacimiento:</th>
@@ -42,6 +46,22 @@
 		<tr>
 			<th scope="row">Género:</th>
 			<td>{{per.pac_cedula__sexo}}</td>
+		</tr>
+		<tr>
+			<th scope="row">Provincia:</th>
+			<td>
+				<a href="/provinciaId/{{per.pac_cedula__can_codigo__pro_codigo}}/">
+					{{per.pac_cedula__can_codigo__pro_codigo__pro_nombre}}
+				</a>
+			</td>
+		</tr>
+		<tr>
+			<th scope="row">Cantón:</th>
+			<td>
+				<a href="/cantonId/{{per.pac_cedula__can_codigo}}/">
+					{{per.pac_cedula__can_codigo__can_nombre}}
+				</a>
+			</td>
 		</tr>
 		<tr>
 			<th scope="row">Dirección:</th>

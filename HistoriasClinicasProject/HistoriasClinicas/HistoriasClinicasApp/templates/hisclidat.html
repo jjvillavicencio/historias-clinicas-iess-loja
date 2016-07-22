@@ -59,7 +59,7 @@ $(document).ready(function() {
 		data.addRows(d);
 
 		// Set chart options
-		var options = {'title':'Tipos de afiliación Enero 2015 - Marzo 2016',
+		var options = {'title':'Distribución de historias clínicas\n por tipos de afiliación Enero 2015 - Marzo 2016',
 		'width':'auto',
 		'height':500};
 
@@ -80,7 +80,7 @@ $(document).ready(function() {
 		console.log(d2);
 		data2.addRows(d2);
 		var options2 = {
-      title: 'Estadísticas por género',
+      title: 'Distribución de historias clínicas\n por género Enero 2015 - Marzo 2016',
       pieHole: 0.4,
 			'width':'auto',
 			'height':500};
@@ -122,7 +122,10 @@ $(document).ready(function() {
 		<div class="panel-heading">
 			<h4>Listado de Historias Clinicas</h4></div>
 			<div class="panel-body">
-
+				<p>
+					<strong>Listado de todas las historias clinicas registradas en el IESS en el periodo Enero 2015 - Marzo 2016</strong>
+				</p>
+				<hr>
 				<div class="table-responsive">
 						<table id="example" class="table display" cellspacing="0" width="100%">
 							<thead>

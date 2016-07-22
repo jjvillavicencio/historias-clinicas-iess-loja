@@ -24,7 +24,10 @@
 	<div id="top-nav" class="nav-bar-mdf navbar-fixed-top navbar navbar-inverse navbar-static-top">
 		<div class="container-fluid">
 			<div class="navbar-header">
-				<a class="navbar-brand" href="/">Historias Clínicas IESS Loja</a>
+				<a class="navbar-brand" href="/">
+					<img class="logo-head" src="{%static 'img/logo.png'%}" height="40px">
+					<span>Historias Clínicas IESS Loja</span>
+				</a>
 			</div>
 		</div>
 		<!-- /container -->
@@ -34,66 +37,83 @@
 	<!-- Main -->
 	{%block container%}
 	{%endblock%}
-	<div class="container container-fluid prueba">
-		<div class="row">
-			<div class="col-sm-2">
-				<!-- Left column -->
-				<a href="#"><strong><i class="glyphicon glyphicon-eye-open"></i> Visualizaciones</strong></a>
+<div class="container container-fluid prueba">
+	<div class="row">
+		<div class="col-sm-2">
+			<!-- Left column -->
+			<a href="#">
+				<strong>
+					<i class="glyphicon glyphicon-eye-open"></i> Visualizaciones
+				</strong>
+			</a>
+			<hr>
+			<ul class="nav nav-stacked">
+				<li class="active">
+					<a href="/hisclidat">
+						<i class="glyphicon glyphicon-menu-right"></i> Historias Clinicas
+					</a>
+				</li>
+				<li>
+					<a href="/pacientedat">
+						<i class="glyphicon glyphicon-menu-right"></i> Pacientes
+					</a>
+				</li>
+				<li>
+					<a href="/contactosdat">
+						<i class="glyphicon glyphicon-menu-right"></i> Contactos
+					</a>
+				</li>
+				<li>
+					<a href="/mapsprov">
+						<i class="glyphicon glyphicon-menu-right"></i> Provincias
+					</a>
+				</li>
+				<li>
+					<a href="/mapscant">
+						<i class="glyphicon glyphicon-menu-right"></i> Cantones
+					</a>
+				</li>
+			</ul>
 
-				<hr>
+			<hr>
 
-				<ul class="nav nav-stacked">
-					<li class="nav-header"> <a href="#" data-toggle="collapse" data-target="#userMenu">DataTables <i class="glyphicon glyphicon-chevron-down"></i></a>
-						<ul class="nav nav-stacked collapse in" id="userMenu">
-							<li class="active"><a href="/hisclidat"><i class="glyphicon glyphicon-list-alt"></i> Historias Clinicas</a></li>
-							<li><a href="/pacientedat"><i class="glyphicon glyphicon-user"></i> Pacientes</a></li>
-							<li><a href="/contactosdat"><i class="glyphicon glyphicon-phone"></i> Contactos</a></li>
-						</ul>
-					</li>
-					<li class="nav-header"> <a href="#" data-toggle="collapse" data-target="#menu2"> Mapas <i class="glyphicon glyphicon-chevron-right"></i></a>
+			<a href="#">
+				<strong>
+					<i class="glyphicon glyphicon-link"></i> Información
+				</strong>
+			</a>
 
-						<ul class="nav nav-stacked collapse" id="menu2">
-							<li><a href="/mapsprov">Provincias</a>
-							</li>
-							<li><a href="/mapscant">Cantones</a>
-							</li>
-						</ul>
-					</li>
-					<li class="nav-header">
-						<a href="#" data-toggle="collapse" data-target="#menu3"> HighCharts<i class="glyphicon glyphicon-chevron-right"></i></a>
-						<ul class="nav nav-stacked collapse" id="menu3">
-							<li><a href=""><i class="glyphicon glyphicon-circle"></i> Género</a></li>
-							<li><a href=""><i class="glyphicon glyphicon-circle"></i> Tipo de seguro</a></li>
-						</ul>
-					</li>
-				</ul>
+			<hr>
 
-				<hr>
+			<ul class="nav nav-pills nav-stacked">
+				<li class="nav-header">
+				</li>
+				<li>
+					<a href="https://git.taw.utpl.edu.ec/jgmasache/historia-clinica-iees-loja">
+						<i class="glyphicon glyphicon-list-alt"></i> Git
+					</a>
+				</li>
 
-				<a href="#"><strong><i class="glyphicon glyphicon-link"></i> Información</strong></a>
+				<li>
+					<a href="https://git.taw.utpl.edu.ec/jgmasache/historia-clinica-iees-loja/wikis/home">
+						<i class="glyphicon glyphicon-book"></i> Wiiki
+					</a>
+				</li>
 
-				<hr>
-
-				<ul class="nav nav-pills nav-stacked">
-					<li class="nav-header"></li>
-					<li><a href="/buspacientedat"><i class="glyphicon glyphicon-list-alt"></i> Reports</a></li>
-					<li><a href="https://git.taw.utpl.edu.ec/jgmasache/historia-clinica-iees-loja/wikis/home"><i class="glyphicon glyphicon-book"></i> Wiiki</a></li>
-					<li><a href="#"><i class="glyphicon glyphicon-star"></i> Social Media</a></li>
-				</ul>
-			</div>
-			<!-- /col-3 -->
-			<div class="col-sm-10">
-
-				<span>
-					<strong>
-						<i class="glyphicon glyphicon-home"></i>
+			</ul>
+		</div>
+		<!-- /col-3 -->
+		<div class="col-sm-10">
+			<span>
+				<strong>
+					<i class="glyphicon glyphicon-home"></i>
 						{%block ruta%}
 						Principal
 						{% endblock %}
-					</strong>
-				</span>
+				</strong>
+			</span>
 
-				<hr>
+			<hr>
 
 				<div class="row">
 					{%block dashboard%}
@@ -148,7 +168,7 @@
 	</div>
 	<!-- /Main -->
 
-	<footer class="text-center">Powered by @jjvillavicencio - @jgmasache</footer>
+	<footer class="bs-docs-footer foot" role="contentinfo"> <div class="copy text-center">Powered by @jjvillavicencio - @jgmasache</footer>
 
 	<!-- /.modal -->
 	<!-- script references -->

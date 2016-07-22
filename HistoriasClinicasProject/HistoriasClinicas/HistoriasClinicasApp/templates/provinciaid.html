@@ -3,47 +3,82 @@
 {%load static%}
 
 {% block head %}
-	<link href="{%static 'css/styles.css'%}" rel="stylesheet">
-	<link href="{%static 'css/styles_menu_lat.css'%}" rel="stylesheet">
-	<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.2/jquery.min.js"></script>
+<link href="{%static 'css/styles.css'%}" rel="stylesheet">
+<link href="{%static 'css/styles_menu_lat.css'%}" rel="stylesheet">
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.2/jquery.min.js"></script>
 
-	<meta name="viewport" content="initial-scale=1.0, user-scalable=no">
-	<script src="https://maps.googleapis.com/maps/api/js?v=3.exp"></script>
+<meta name="viewport" content="initial-scale=1.0, user-scalable=no">
 
-	<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 
-	<script type="text/javascript">
-		google.charts.load('current', {'packages':['corechart']});
-		google.charts.setOnLoadCallback(drawChart);
+<script type="text/javascript">
+	google.charts.load('current', {'packages':['corechart']});
+	google.charts.setOnLoadCallback(drawChart);
 
-		function drawChart() {
+	function drawChart() {
 
-			// Create the data table.
-			var data = new google.visualization.DataTable();
-			data.addColumn('string', 'Tipo de seguro');
-			data.addColumn('number', 'Cantidad');
-			var d = [];
-			{% for tip in datos_tipos %}
-				{% if tip.cantidad != 0 %}
-					d.push(['{{tip.tip_nombre}}', {{tip.tip_cantidad}}])
-				{% endif %}
-			{% endfor %}
-			console.log(d);
-			data.addRows(d);
+		// Create the data table.
+		var data = new google.visualization.DataTable();
+		data.addColumn('string', 'Tipo de seguro');
+		data.addColumn('number', 'Cantidad');
+		var d = [];
+		{% for tip in datos_tipos %}
+			{% if tip.cantidad != 0 %}
+				d.push(['{{tip.tip_nombre}}', {{tip.tip_cantidad}}])
+			{% endif %}
+		{% endfor %}
+		console.log(d);
+		data.addRows(d);
 
-			// Set chart options
-			var options = {'title':'Tipos de seguro en la provincia de {{provincia}}',
-			'width':'auto',
-			'height':500};
+		// Set chart options
+		var options = {'title':'Distribución por tipo de afiliación de Historias Clínicas \n de la Provincia de {{provincia}}',
+		'width':'auto',
+		'height':500};
 
-			// Instantiate and draw our chart, passing in some options.
-			var chart = new google.visualization.PieChart(document.getElementById('chart_div'));
-			chart.draw(data, options);
-		}
-	</script>
+		// Instantiate and draw our chart, passing in some options.
+		var chart = new google.visualization.PieChart(document.getElementById('chart_div'));
+		chart.draw(data, options);
+	}
+</script>
 
-	<script src="https://code.highcharts.com/highcharts.js"></script>
-	<script src="https://code.highcharts.com/modules/exporting.js"></script>
+<script src="https://code.highcharts.com/highcharts.js"></script>
+<script src="https://code.highcharts.com/highcharts-3d.js"></script>
+<script src="https://code.highcharts.com/modules/exporting.js"></script>
+
+<script type="text/javascript">
+$(function () {
+	var d = [];
+	{% for tip in gener_dat %}
+		d.push(['{{tip.genero}}', {{tip.gen_cantidad}}])
+	{% endfor %}
+	$('#donut-3d').highcharts({
+		chart: {
+			type: 'pie',
+			options3d: {
+				enabled: true,
+				alpha: 45
+			}
+		},
+		title: {
+			text: 'Distribución por género de Historias Clínicas'
+		},
+		subtitle: {
+			text: 'Provincia de {{provincia}}'
+		},
+		plotOptions: {
+			pie: {
+				innerSize: 100,
+				depth: 45
+			}
+		},
+		series: [{
+			name: 'Cantidad de Historias Clínicas',
+			data: d
+		}]
+	});
+});
+</script>
+
 
 {% endblock %}
 
@@ -53,20 +88,18 @@
 
 {%block dashboard%}
 
-<div class="col-md-10">
+<div class="col-md-12">
 	<div class="panel panel-default">
 		<div class="panel-heading">
-			<h4>Porcentajes</h4>
+			<h4>Gráficos estadísticos</h4>
 		</div>
 		<div class="panel-body">
 			<div id="chart_div">
 			</div>
+			<div id="donut-3d" style="height: 400px">
+			</div>
 		</div>
 	</div>
-</div>
-
-<div class="col-md-2">
-	
 </div>
 
 {%endblock%}

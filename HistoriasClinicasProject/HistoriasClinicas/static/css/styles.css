@@ -4,7 +4,23 @@
 	margin-bottom: 25px;
 }
 
+.foot{
+	background-color: #F5F5F5 !important;
+	height: 70px !important;
+	color: #004370 !important;
+}
 
+.foot .copy{
+	padding-top: 30px;
+}
+
+.nav-bar-mdf {
+	height: 8% !important;
+}
+
+.nav-bar-mdf img {
+	margin-top: -15px !important;
+}
 
 .nav-bar-mdf a:hover {
 		color: white !important;
@@ -12,4 +28,8 @@
 
 .prueba{
 	margin-top: 7%;
+}
+
+.logo-head{
+	float: left;
 }

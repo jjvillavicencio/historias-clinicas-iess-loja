@@ -5,7 +5,7 @@
 <link href="{%static 'css/styles.css'%}" rel="stylesheet">
 <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.2/jquery.min.js"></script>
 
-<meta name="viewport" content="initial-scale=1.0, user-scalable=no">
+
 <script src="https://maps.googleapis.com/maps/api/js?v=3.exp"></script>
 	<script>
 	function initialize(){
@@ -27,7 +27,7 @@
 		});
 		google.maps.event.addListener(marker, 'click', function(){
 			var popup = new google.maps.InfoWindow();
-			var note = '{{dic.cantidad}} registros en <a href="#">{{dic.provincia}}</a>';
+			var note = '{{dic.cantidad}} registros en <a href="/provinciaId/{{dic.codigo}}/">{{dic.provincia}}</a>';
 			popup.setContent(note);
 			popup.open(map, this);
 		})
@@ -41,7 +41,7 @@
 	<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 
 	<script type="text/javascript">
-      google.charts.load("current", {packages:["corechart"]});
+      google.charts.load("current", {packages:["corechart","table"]});
       google.charts.setOnLoadCallback(drawChart);
       function drawChart() {
         var data = google.visualization.arrayToDataTable([
@@ -62,6 +62,26 @@
         var chart = new google.visualization.PieChart(document.getElementById('chart_div'));
         chart.draw(data, options);
       }
+
+      google.charts.setOnLoadCallback(drawTable);
+
+      function drawTable() {
+        var data = new google.visualization.DataTable();
+        data.addColumn('string', 'Provincia');
+        data.addColumn('number', 'Cantidad de pacientes');
+        data.addRows([
+          {% for dic in diccionario %}
+						{% if dic.cantidad != 0 %}
+							['<a href="/provinciaId/{{dic.codigo}}/">{{dic.provincia}}</a>', {{dic.cantidad}}],
+						{% endif %}
+					{% endfor %}
+        ]);
+
+        var table = new google.visualization.Table(document.getElementById('table_div'));
+
+        table.draw(data, {showRowNumber: true, width: '100%', height: '100%', allowHtml: true});
+      }
+
     </script>
 
 
@@ -71,7 +91,7 @@
 <div class="col-md-12">
 	<div class="panel panel-default">
 		<div class="panel-heading">
-			<h4>Distribución de los pacientes por provincia</h4></div>
+			<h4>Distribución de la procedencia de los pacientes por provincia</h4></div>
 			<div class="panel-body">
 				<section id="map-canvas" style="height:500px; width=auto"></section>
 			</div>
@@ -83,7 +103,8 @@
 			<div class="panel-heading">
 				<h4>Porcentajes</h4></div>
 				<div class="panel-body">
-					<div id="chart_div" style="width: auto; height: 500px;"></div>
+					<div id="chart_div" style="width: auto; height: 300px;"></div>
+					<div id="table_div" style="width: auto; height: 300px;"></div>
 				</div>
 			</div>
 		</div>

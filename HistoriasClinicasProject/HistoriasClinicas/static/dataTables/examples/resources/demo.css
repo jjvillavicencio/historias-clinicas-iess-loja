@@ -15,10 +15,6 @@ body.dt-example-bootstrap {
 	line-height: 1.42857143;
 }
 
-div.container {
-	max-width: 980px;
-	margin: 0 auto;
-}
 
 h1 {
 	font-family: 'HelveticaNeue-UltraLight', 'Helvetica Neue UltraLight', 'Raleway', 'Helvetica Neue', Arial, Helvetica, sans-serif;
